@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import javax.sql.DataSource;
 import java.util.LinkedHashMap;
@@ -28,16 +29,19 @@ public class ShiroConfig {
         dataSource.setUrl("jdbc:mysql://localhost:3306/dipl");
         dataSource.setUsername("root");
         dataSource.setPassword("root");
+        System.out.println("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDd");
         return dataSource;
     }
 
     @Bean
     public JdbcRealm jdbcRealm(DataSource dataSource) {
+        System.out.println("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj");
         JdbcRealm jdbcRealm = new JdbcRealm();
         jdbcRealm.setDataSource(dataSource);
 
         // SQL-запити для аутентифікації та авторизації
         jdbcRealm.setAuthenticationQuery("SELECT password_user FROM user_data WHERE login_user = ?");
+        System.out.println("asfdfhgjhkjlkjhgfdsadfghjkljkhgdsassdfghkjkhgfdsadfdghjkjkhgfdsdd");
         jdbcRealm.setUserRolesQuery("SELECT name_role FROM role_user r JOIN user_data u ON u.role_id = r.id_role WHERE u.login_user = ?");
         jdbcRealm.setPermissionsQuery("SELECT permission FROM permissions WHERE role_name = ?");
 
@@ -47,6 +51,7 @@ public class ShiroConfig {
 
     @Bean(name = "securityManager")
     public DefaultWebSecurityManager securityManager(JdbcRealm jdbcRealm) {
+        System.out.println("sssssssssssssssssssssssssssssssssss");
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(jdbcRealm);
         return securityManager;
@@ -54,6 +59,7 @@ public class ShiroConfig {
 
     @Bean
     public ShiroFilterFactoryBean shiroFilter(@Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
+        System.out.println("shiroFilter");
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
@@ -82,12 +88,13 @@ public class ShiroConfig {
 
     @Bean
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        System.out.println("lllllllllllllllllllllllllllllllllllllll");
         return new LifecycleBeanPostProcessor();
     }
-
     @PostConstruct
-    public void init() {
-        // Встановлюємо SecurityManager в ThreadContext після того, як всі біни ініціалізовані
-        SecurityUtils.setSecurityManager(securityManager(jdbcRealm(dataSource())));
+    public void initializeShiro() {
+        // Bind SecurityManager explicitly after context has been fully initialized
+        SecurityUtils.setSecurityManager(securityManager(null));
+        System.out.println("SecurityManager has been bound successfully.");
     }
 }

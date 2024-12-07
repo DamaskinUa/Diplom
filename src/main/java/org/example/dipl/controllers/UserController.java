@@ -72,15 +72,17 @@ import java.util.Arrays;
                 } catch (org.apache.shiro.authc.AuthenticationException e) {
                     return "redirect:/login?error=true"; // Помилка автентифікації
                 }
-            }
+            } else if (!isApacheShiroProfile) {
 
-            // Якщо використовується інший профіль
-            boolean isAuthenticated = securityService.authenticate(username, password);
-            if (isAuthenticated) {
-                return "redirect:/profile";
-            } else {
-                return "redirect:/login?error=true";
+                // Якщо використовується інший профіль
+                boolean isAuthenticated = securityService.authenticate(username, password);
+                if (isAuthenticated) {
+                    return "redirect:/profile";
+                } else {
+                    return "redirect:/login?error=true";
+                }
             }
+            return "redirect:/login?error=true";
         }
 
         @GetMapping("/profile")

@@ -71,6 +71,10 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>4.0.1</version> <!-- Ensure to match the version with your servlet container (e.g., Tomcat) -->
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jdbc</artifactId>
+		</dependency>
 	</dependencies>
 
 	<profiles>
