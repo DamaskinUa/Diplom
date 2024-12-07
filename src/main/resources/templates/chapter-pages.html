@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Сторінки Розділу</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+<!-- Шапка -->
+<header th:insert="blocks/header :: header" class="header"></header>
+
+<!-- Основний контент -->
+<div class="main">
+  <div class="containerChapter">
+    <!-- Опис розділу -->
+    <div class="chapter-details">
+      <h1 th:text="${chapter.nameChapter}">Назва Розділу</h1>
+      <p th:text="'Дата випуску: ' + ${chapter.dateReleaseChapter}">Дата випуску</p>
+      <p th:text="'Номер розділу: ' + ${chapter.numberChapter}">Номер розділу</p>
+    </div>
+
+    <!-- Список сторінок -->
+    <div class="pages-container">
+      <h2>Сторінки:</h2>
+      <div class="catalog-list-page">
+        <!-- Перебір сторінок -->
+        <div th:each="page : ${pages}" class="catalog-item">
+          <img th:src="${page.imagePage}" alt="Сторінка" class="catalog-image-page">
+          <p th:text="'Сторінка ' + ${page.numberPage}"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Футер -->
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

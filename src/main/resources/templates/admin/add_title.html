@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Додати Комікс</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header" class="header"></header>
+<h1>Додати новий комікс</h1>
+<form th:action="@{/admin/titles/add}" th:object="${title}" method="post" enctype="multipart/form-data">
+  <label for="nameTitle">Назва:</label>
+  <input type="text" id="nameTitle" th:field="*{nameTitle}" required>
+
+  <label for="descriptionTitle">Опис:</label>
+  <textarea id="descriptionTitle" th:field="*{descriptionTitle}" required class="description-textarea"></textarea>
+  <br>
+
+  <label for="status">Статус:</label>
+  <select th:field="*{status}">
+    <option th:each="status : ${status}" th:value="${status.idStatus}" th:text="${status.nameStatus}"></option>
+  </select>
+
+  <br>
+  <label for="genres">Жанри:</label>
+  <select th:field="*{genres}" multiple>
+    <option th:each="genre : ${genres}" th:value="${genre.idGenre}" th:text="${genre.nameGenre}"></option>
+  </select>
+
+  <br>
+  <label for="artists">Автори:</label>
+  <select id="artists" name="artists" multiple>
+    <option th:each="artist : ${artists}" th:value="${artist.idArtist}" th:text="${artist.nameArtist}"></option>
+  </select>
+
+  <br>
+  <label for="screenwriters">Сценаристи:</label>
+  <select id="screenwriters" name="screenwriters" multiple>
+    <option th:each="screenwriter : ${screenwriters}" th:value="${screenwriter.idScreenwriter}" th:text="${screenwriter.nameScreenwriter}"></option>
+  </select>
+
+  <br>
+  <label for="translates">Перекладачі:</label>
+  <select id="translates" name="translates" multiple>
+    <option th:each="translate : ${translates}" th:value="${translate.idTranslate}" th:text="${translate.nameTranslate}"></option>
+  </select>
+
+  <br>
+  <!-- Поле для завантаження картинки -->
+  <label for="image">Картинка:</label>
+  <input type="file" id="image" name="image" accept="image/*" required>
+
+  <button type="submit">Додати комікс</button>
+</form>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

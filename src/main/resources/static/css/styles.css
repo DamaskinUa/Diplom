@@ -1,0 +1,344 @@
+/* Загальні стилі */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #f4f4f4; /* Легкий фон для всього сайту */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Встановлюємо висоту 100% */
+}
+
+/* Шапка */
+.header {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.logo {
+    width: 100px;
+    height: auto;
+}
+
+.site-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+.nav-link:hover {
+    color: #ffd700;
+}
+
+/* Основний контент */
+.main {
+    padding: 40px 0;
+    background-color: #fff;
+    flex: 1; /* Це дозволяє основному контенту займати весь доступний простір */
+}
+
+/* Стилі для контейнерів */
+.container {
+    display: grid;
+    grid-template-columns: 3fr 1fr; /* Каталог займає 3 частини, фільтр 1 частину */
+    gap: 20px;
+    padding: 0 20px;
+}
+
+/* Стилі для елементів каталогу */
+.catalog-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Змінюється в залежності від ширини екрану */
+    gap: 30px;
+}
+
+.catalog-item {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.catalog-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+}
+
+.catalog-item h2 {
+    margin-top: 15px;
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.catalog-item p {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 10px;
+}
+
+.catalog-image {
+    width: 200px; /* Ширина зображення */
+    height: 300px; /* Висота зображення */
+    object-fit: cover; /* Обрізає зображення під потрібний розмір */
+    border-radius: 5px; /* Заокруглені кути (опційно) */
+    display: block; /* Гарантує правильне відображення */
+    margin: 0 auto; /* Вирівнювання зображень */
+}
+.catalog-image-page {
+    width: 90%; /* Зображення займає всю ширину контейнера */
+    max-width: 100%; /* Максимальна ширина зображення 100% */
+    height: auto; /* Автоматична висота для збереження пропорцій */
+    object-fit: cover; /* Обрізає зображення під потрібний розмір */
+    border-radius: 5px; /* Заокруглені кути (опційно) */
+    display: block; /* Гарантує правильне відображення */
+    margin: 0 auto; /* Вирівнювання зображень */
+}
+
+
+.catalog-image:hover {
+    transform: scale(1.05);
+}
+.title-image-title {
+    max-width: 100%; /* Максимальна ширина не перевищує ширину контейнера */
+    max-height: 150px; /* Максимальна висота обмежена */
+    width: auto; /* Пропорційна ширина */
+    height: auto; /* Пропорційна висота */
+    object-fit: cover; /* Обрізає зображення, якщо співвідношення не збігається */
+    border-radius: 5px; /* Заокруглені кути */
+    display: block; /* Правильне відображення */
+    margin: 0 auto; /* Центрування */
+}
+
+
+/* Кнопка Деталі */
+.btn-details {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.btn-details:hover {
+    background-color: #0056b3;
+}
+
+/* Стилі для фільтрів */
+.filter-container {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Тінь для фільтра */
+}
+
+.search-input, .genre-select, .status-select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.search-input {
+    margin-bottom: 15px;
+}
+
+/* Опис розділу */
+.chapter-details {
+    margin-bottom: 30px;
+}
+
+.chapter-details h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.chapter-details p {
+    font-size: 1rem;
+    color: #555;
+}
+
+/* Контейнер */
+.containerChapter {
+    display: flex;
+    flex-direction: column; /* Елементи будуть розташовані вертикально */
+    gap: 20px; /* Відступ між блоками */
+    padding: 0 20px;
+}
+/* Контейнер */
+.containerVert {
+    display: flex;
+    flex-direction: column; /* Елементи будуть розташовані вертикально */
+    gap: 20px; /* Відступ між блоками */
+    padding: 0 20px;
+}
+.titles-table{
+    width: 100%; /* Займає всю ширину контейнера */
+    border-collapse: collapse; /* Для того, щоб клітинки не мали відступів */
+}
+
+/* Список сторінок */
+.pages-container {
+    margin-top: 20px;
+}
+
+.pages-container h2 {
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+/* Стилі для елементів сторінок */
+.catalog-list-page {
+    display: flex;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Змінюється в залежності від ширини екрану */
+    flex-direction: column; /* Елементи будуть розташовані вертикально */
+    gap: 20px; /* Відступ між блоками */
+    padding: 0 20px;
+}
+
+/* Футер */
+.footer {
+    background: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 40px;
+    margin-bottom: 0; /* Забираємо відступи знизу */
+}
+
+.container-footer {
+    display: grid;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.footer p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+/* Центрування форми */
+.body-login {
+    display: flex; /* Встановлює режим flexbox для body */
+    justify-content: center; /* Центрує по горизонталі */
+    align-items: center; /* Центрує по вертикалі */
+    min-height: 60vh; /* Мінімальна висота - повний екран */
+    margin: 0; /* Вилучає стандартні відступи */
+    background-color: #f4f4f4; /* Задає фон */
+}
+
+/* Контейнер для форми */
+.form-container-login {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+
+/* Стилі для полів вводу */
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Стиль для кнопки увійти */
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Стилі для кнопки реєстрації */
+.register-link {
+    margin-top: 15px;
+}
+
+.btn-register {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* При наведенні на кнопку реєстрації */
+.btn-register:hover {
+    text-decoration: underline;
+}
+/* Стилі для форми пошуку */
+.search-form {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.search-input {
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 250px;
+}
+
+.btn-search {
+    padding: 8px 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-search:hover {
+    background-color: #218838;
+}
+
+.description-textarea {
+    width: 100%;
+    height: 150px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+

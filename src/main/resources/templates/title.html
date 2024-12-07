@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title th:text="${title.nameTitle}">Комікс</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header" class="header"></header>
+<main class="main">
+
+  <div class="container">
+    <!-- Заголовок -->
+    <div class="title-header">
+      <img th:src="${title.imageTitle}" alt="Обкладинка" class="title-image-title">
+      <div class="title-info">
+        <h1 th:text="${title.nameTitle}">Назва коміксу</h1>
+        <p th:text="${title.descriptionTitle}">Опис коміксу</p>
+        <div class="meta-info">
+          <span>Дата релізу: <span th:text="${title.dateReleaseTitle}">2023-01-01</span></span>
+          <span>Жанри:
+                        <span th:each="genre : ${title.genres}" th:text="${genre.nameGenre}" class="genre-badge">Жанр</span>
+                    </span>
+          <span>Статус: <span th:text="${title.status.nameStatus}">Активний</span></span>
+        </div>
+      </div>
+      <span th:if="${#authentication != null and #authentication.name != 'anonymousUser'}">
+        <div class="bookmark">
+          <form th:action="@{/titles/{id}/addBookmark(id=${title.idTitle})}" method="post" th:if="${not isMarked}">
+            <div th:if="${isSpringSecurityProfile}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            </div>
+            <button type="submit">Додати в закладки</button>
+          </form>
+          <form th:action="@{/titles/{id}/removeBookmark(id=${title.idTitle})}" method="post" th:if="${isMarked}">
+            <div th:if="${isSpringSecurityProfile}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            </div>
+            <button type="submit">Видалити із закладок</button>
+          </form>
+        </div>
+      </span>
+    </div>
+
+    <!-- Розділи -->
+    <div class="chapters">
+      <h2>Розділи</h2>
+      <ul>
+        <li th:each="chapter : ${title.chapters}">
+          <a th:href="@{/titles/{idTitle}/chapters/{idChapter}(idTitle=${title.idTitle},idChapter = ${chapter.idChapter})}" th:text="'Розділ ' + ${chapter.numberChapter}"></a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Автори -->
+    <div class="creators">
+      <h2>Автори</h2>
+      <ul>
+        <li th:each="artist : ${title.artists}" th:text="${artist.nameArtist}"></li>
+      </ul>
+    </div>
+
+    <!-- Перекладачі -->
+    <div class="translators">
+      <h2>Перекладачі</h2>
+      <ul>
+        <li th:each="translate : ${title.translates}" th:text="${translate.nameTranslate}"></li>
+      </ul>
+    </div>
+  </div>
+</main>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+
+</body>
+</html>

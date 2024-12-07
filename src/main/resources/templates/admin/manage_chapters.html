@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Керування главами</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header" class="header"></header>
+<h1>Глави коміксу: <span th:text="${title.nameTitle}"></span></h1>
+<a href="/admin/titles" class="btn btn-back">Назад до списку</a>
+<a th:href="@{'/admin/titles/' + ${title.idTitle} + '/chapters/add'}">Додати нову главу</a>
+<table>
+  <thead>
+  <tr>
+    <th>№</th>
+    <th>Назва</th>
+    <th>Дії</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="chapter : ${chapters}">
+    <td th:text="${chapter.numberChapter}"></td>
+    <td th:text="${chapter.nameChapter}"></td>
+    <td>
+      <a th:href="@{'/admin/titles/' + ${title.idTitle} + '/chapters/' + ${chapter.idChapter} + '/edit'}">Редагувати</a>
+      <form th:action="@{'/admin/titles/' + ${title.idTitle} + '/chapters/delete/' + ${chapter.idChapter}}" method="post">
+        <button type="submit">Видалити</button>
+      </form>
+      <a th:href="@{'/admin/titles/' + ${title.idTitle} + '/chapters/' + ${chapter.idChapter} + '/pages'}">Переглянути сторінки</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

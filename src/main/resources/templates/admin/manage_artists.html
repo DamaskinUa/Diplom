@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Керування авторами</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header" class="header"></header>
+<h1>Керування авторами</h1>
+
+<a href="/admin/artists/add">Додати нового автора</a>
+
+<table>
+  <thead>
+  <tr>
+    <th>Ім'я автора</th>
+    <th>Дії</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="artist : ${artists}">
+    <td th:text="${artist.nameArtist}"></td>
+    <td>
+      <a th:href="@{/admin/artists/edit/{id}(id=${artist.idArtist})}">Редагувати</a>
+      <form th:action="@{/admin/artists/delete/{id}(id=${artist.idArtist})}" method="post" style="display:inline;">
+        <button type="submit">Видалити</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

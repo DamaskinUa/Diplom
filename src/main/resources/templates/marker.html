@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header" class="header"></header>
+<main class="main">
+    <div class="container">
+        <!-- Каталог -->
+        <div class="catalog-list">
+            <div th:each="title : ${titles}" class="catalog-item">
+                <img th:src="${title.imageTitle}" alt="Обкладинка" class="catalog-image">
+                <h2 th:text="${title.nameTitle}"></h2>
+                <p th:text="${title.descriptionTitle}"></p>
+                <a th:href="@{/titles/{idTitle}(idTitle=${title.idTitle})}" class="btn-details">Деталі</a>
+            </div>
+        </div>
+
+        <!-- Фільтри -->
+        <div class="filter-container">
+            <form method="get" action="/catalog" id="filterForm">
+                <!-- Пошук за назвою -->
+                <input type="text"
+                       placeholder="Пошук за назвою (введіть назву коміксу)"
+                       name="searchQuery"
+                       th:value="${searchQuery}"
+                       class="search-input"
+                       onfocus="this.placeholder = ''"
+                       onblur="this.placeholder = 'Пошук за назвою (введіть назву коміксу)'">
+                <!-- Фільтр за жанром -->
+                <select name="genreId" class="genre-select" onchange="document.getElementById('filterForm').submit();">
+                    <option value="">Всі жанри</option>
+                    <option th:each="genre : ${genres}"
+                            th:value="${genre.idGenre}"
+                            th:selected="${genre.idGenre == selectedGenre}"
+                            th:text="${genre.nameGenre}"></option>
+                </select>
+
+                <!-- Фільтр за статусом -->
+                <select name="statusId" class="status-select" onchange="document.getElementById('filterForm').submit();">
+                    <option value="">Всі статуси</option>
+                    <option th:each="status : ${status}"
+                            th:value="${status.idStatus}"
+                            th:selected="${status.idStatus == selectedStatus}"
+                            th:text="${status.nameStatus}"></option>
+                </select>
+            </form>
+        </div>
+    </div>
+</main>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

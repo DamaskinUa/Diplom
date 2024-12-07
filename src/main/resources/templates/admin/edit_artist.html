@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Редагувати автора</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header" class="header"></header>
+<h1>Редагувати автора</h1>
+
+<form th:action="@{/admin/artists/edit/{id}(id=${artist.idArtist})}" method="post">
+  <label for="nameArtist">Ім'я автора:</label>
+  <input type="text" id="nameArtist" name="nameArtist" th:value="${artist.nameArtist}" required>
+
+  <label for="descriptioneArtist">Опис:</label>
+  <textarea id="descriptioneArtist" name="descriptioneArtist" th:text="${artist.descriptioneArtist}"></textarea>
+
+  <button type="submit">Зберегти зміни</button>
+</form>
+
+<a href="/admin/artists">Назад до списку авторів</a>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

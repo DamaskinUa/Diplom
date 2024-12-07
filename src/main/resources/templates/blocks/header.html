@@ -1,0 +1,23 @@
+<div th:fragment="header">
+    <div class="logo-container">
+        <img src="/images/logo.png" alt="Logo" class="logo">
+        <span class="site-name">Комікс Сайт</span>
+        <!--<span th:text="${#authentication != null ? 'Authenticated: ' + #authentication.name : 'Not Authenticated'}"></span>-->
+
+    </div>
+    <nav class="nav-links">
+        <a href="/catalog" class="nav-link">Каталог</a>
+        <div class="auth-links">
+            <!-- For unauthenticated users in all profiles -->
+            <span th:if="${#authentication == null or #authentication.name == 'anonymousUser'}">
+                <a href="/login" class="nav-link">Авторизація</a>
+            </span>
+
+            <!-- For authenticated users in Spring Security and Apache Shiro profiles -->
+            <span th:if="${#authentication != null and #authentication.name != 'anonymousUser'}">
+                <a href="/marker" class="nav-link">Закладки</a>
+                <a href="/profile" class="nav-link">Мій профіль</a>
+            </span>
+        </div>
+    </nav>
+</div>

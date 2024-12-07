@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Профіль</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header" class="header"></header>
+<h1>Мій профіль</h1>
+<p>Логін: <span th:text="${user.loginUser}"></span></p>
+<p>Електронна пошта: <span th:text="${user.email}"></span></p>
+<a href="/profile/edit" class="button">Редагувати профіль</a>
+<form action="/logout" method="POST" th:action="@{/logout}">
+    <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+    <button type="submit" class="nav-link">Вийти</button>
+</form>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

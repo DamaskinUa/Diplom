@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Додати сторінку</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header" class="header"></header>
+<h1>Додати сторінку до глави: <span th:text="${page.chapter.nameChapter}"></span></h1>
+<form th:action="@{'/admin/titles/' + ${page.chapter.title.idTitle} + '/chapters/' + ${page.chapter.idChapter} + '/pages/add'}" method="post" enctype="multipart/form-data">
+  <label for="numberPage">Номер сторінки:</label>
+  <input type="number" id="numberPage" name="numberPage" required>
+  <br>
+  <label for="image">Зображення сторінки:</label>
+  <input type="file" id="image" name="image" accept="image/*" required>
+  <br>
+  <button type="submit">Зберегти</button>
+</form>
+<a th:href="@{'/admin/titles/' + ${page.chapter.title.idTitle} + '/chapters/' + ${page.chapter.idChapter} + '/pages'}">Назад до списку</a>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

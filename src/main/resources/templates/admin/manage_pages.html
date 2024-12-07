@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Керування сторінками</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header" class="header"></header>
+<h1>Сторінки глави: <span th:text="${chapter.nameChapter}"></span></h1>
+<a th:href="@{'/admin/titles/' + ${chapter.title.idTitle} + '/chapters'}" class="btn btn-back">Назад до списку</a>
+<a th:href="@{'/admin/titles/' + ${chapter.title.idTitle} + '/chapters/' + ${chapter.idChapter} + '/pages/add'}">Додати нову сторінку</a>
+<table>
+  <thead>
+  <tr>
+    <th>№</th>
+    <th>Зображення</th>
+    <th>Дії</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="page : ${pages}">
+    <td th:text="${page.numberPage}"></td>
+    <td>
+      <img th:src="${page.imagePage}" alt="Сторінка" style="max-width: 200px; height: auto;">
+    </td>
+    <td>
+      <a th:href="@{'/admin/titles/' + ${chapter.title.idTitle} + '/chapters/' + ${chapter.idChapter} + '/pages/edit/' + ${page.idPage}}">Редагувати</a>
+      <form th:action="@{'/admin/titles/' + ${chapter.title.idTitle} + '/chapters/' + ${chapter.idChapter} + '/pages/delete/' + ${page.idPage}}" method="post">
+        <button type="submit">Видалити</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<a th:href="@{'/admin/titles/' + ${chapter.title.idTitle} + '/chapters'}">Назад до глав</a>
+</body>
+</html>

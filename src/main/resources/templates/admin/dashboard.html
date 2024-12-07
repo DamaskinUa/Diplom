@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Адмін панель</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+<header th:insert="blocks/header :: header" class="header"></header>
+<h1>Адмін панель</h1>
+<div>
+  <a href="/admin/titles">Керувати коміксами</a>
+  <a href="/admin/artists">Керувати авторами</a>
+  <a href="/admin/translates">Керувати перекладачами</a>
+  <a href="/admin/screenwriters">Керувати сценаристами</a>
+  <a href="/admin/genres">Керувати жанрами</a>
+  <a href="/admin/statuses">Керувати статусами</a>
+</div>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

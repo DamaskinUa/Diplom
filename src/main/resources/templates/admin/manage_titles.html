@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Керування Коміксами</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header" class="header"></header>
+<h1>Керування Коміксами</h1>
+<a href="/admin" class="btn btn-primary">Повернутись</a>
+<a href="/admin/titles/add" class="btn btn-primary">Додати новий комікс</a>
+<div class="container">
+  <table class="titles-table">
+    <thead>
+    <tr>
+      <th>Назва</th>
+      <th>Статус</th>
+      <th>Дії</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="title : ${titles}">
+      <td th:text="${title.nameTitle}"></td>
+      <td th:text="${title.status.nameStatus}"></td>
+      <td>
+        <a th:href="@{'/admin/titles/' + ${title.idTitle} + '/chapters'}" class="btn btn-chapters">Глави</a>
+        <a href="/admin/titles/edit/{id}" th:href="@{'/admin/titles/edit/' + ${title.idTitle}}" class="btn btn-edit">Редагувати</a>
+        <form th:action="@{'/admin/titles/delete/' + ${title.idTitle}}" method="post" style="display:inline;">
+          <button type="submit" class="btn btn-delete">Видалити</button>
+        </form>
+        <a href="/titles/{id}" th:href="@{'/titles/' + ${title.idTitle}}" class="btn btn-view">Переглянути</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Форма пошуку за назвою -->
+  <div class="filter-container">
+  <form action="/admin/titles" method="get" class="search-form">
+    <input type="text"
+           placeholder="Пошук за назвою (введіть назву коміксу)"
+           name="searchQuery"
+           th:value="${searchQuery}"
+           class="search-input"
+           onfocus="this.placeholder = ''"
+           onblur="this.placeholder = 'Пошук за назвою (введіть назву коміксу)'">
+    <button type="submit" class="btn btn-search">Пошук</button>
+  </form>
+  </div>
+
+</div>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

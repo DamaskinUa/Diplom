@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Редагувати комікс</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header" class="header"></header>
+<h1>Редагувати комікс</h1>
+<div class="container">
+  <form th:action="@{'/admin/titles/edit/' + ${title.idTitle}}" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="nameTitle">Назва</label>
+      <input type="text" id="nameTitle" name="nameTitle" th:value="${title.nameTitle}" required>
+    </div>
+    <div class="form-group">
+      <label for="descriptionTitle">Опис</label>
+      <textarea id="descriptionTitle" name="descriptionTitle" th:text="${title.descriptionTitle}" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="genres">Жанри</label>
+      <select id="genres" name="genres" th:field="${title.genres}" multiple required>
+        <option th:each="genre : ${genres}" th:value="${genre.idGenre}" th:text="${genre.nameGenre}"></option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="status">Статус</label>
+      <select id="status" name="status" th:field="${title.status}" required>
+        <option th:each="status : ${status}" th:value="${status.idStatus}" th:text="${status.nameStatus}"></option>
+      </select>
+    </div>
+    <label for="artists">Автори:</label>
+    <select id="artists" name="artists" multiple>
+      <option th:each="artist : ${artists}" th:value="${artist.idArtist}" th:text="${artist.nameArtist}"
+              th:selected="${title.artists.contains(artist)}"></option>
+    </select>
+
+    <label for="screenwriters">Сценаристи:</label>
+    <select id="screenwriters" name="screenwriters" multiple>
+      <option th:each="screenwriter : ${screenwriters}" th:value="${screenwriter.idScreenwriter}" th:text="${screenwriter.nameScreenwriter}"
+              th:selected="${title.screenwriters.contains(screenwriter)}"></option>
+    </select>
+
+    <label for="translates">Перекладачі:</label>
+    <select id="translates" name="translates" multiple>
+      <option th:each="translate : ${translates}" th:value="${translate.idTranslate}" th:text="${translate.nameTranslate}"
+              th:selected="${title.translates.contains(translate)}"></option>
+    </select>
+    <!-- Додаємо поле для завантаження зображення -->
+    <div class="form-group">
+      <label for="image">Змінити зображення</label>
+      <input type="file" id="image" name="image">
+      <img th:if="${title.imageTitle}" th:src="@{${title.imageTitle}}" alt="Зображення комікса" style="width: 100px; height: auto;"/>
+    </div>
+    <button type="submit" class="btn btn-submit">Зберегти зміни</button>
+  </form>
+  <a href="/admin/titles" class="btn btn-back">Назад до списку</a>
+</div>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>
+
