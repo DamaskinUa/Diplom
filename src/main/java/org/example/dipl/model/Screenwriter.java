@@ -13,7 +13,7 @@ public class Screenwriter {
 
     @Column(nullable = false)
     private String nameScreenwriter;
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String descriptionScreenwriter;
 
     @ManyToMany(mappedBy = "screenwriters")

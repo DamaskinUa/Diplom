@@ -19,9 +19,11 @@
         <p th:text="${title.descriptionTitle}">Опис коміксу</p>
         <div class="meta-info">
           <span>Дата релізу: <span th:text="${title.dateReleaseTitle}">2023-01-01</span></span>
+          <br>
           <span>Жанри:
-                        <span th:each="genre : ${title.genres}" th:text="${genre.nameGenre}" class="genre-badge">Жанр</span>
-                    </span>
+            <span th:each="genre : ${title.genres}" th:text="${genre.nameGenre}" class="genre-badge">Жанр</span>
+          </span>
+          <br>
           <span>Статус: <span th:text="${title.status.nameStatus}">Активний</span></span>
         </div>
       </div>
@@ -48,7 +50,7 @@
       <h2>Розділи</h2>
       <ul>
         <li th:each="chapter : ${title.chapters}">
-          <a th:href="@{/titles/{idTitle}/chapters/{idChapter}(idTitle=${title.idTitle},idChapter = ${chapter.idChapter})}" th:text="'Розділ ' + ${chapter.numberChapter}"></a>
+          <a th:href="@{/titles/{idTitle}/chapters/{idChapter}(idTitle=${title.idTitle},idChapter = ${chapter.idChapter})}" th:text="'Розділ ' +${chapter.numberChapter}+ ' ' + ${chapter.nameChapter}"></a>
         </li>
       </ul>
     </div>
@@ -57,7 +59,12 @@
     <div class="creators">
       <h2>Автори</h2>
       <ul>
-        <li th:each="artist : ${title.artists}" th:text="${artist.nameArtist}"></li>
+        <li th:each="artist : ${title.artists}">
+          <a th:href="@{/artist/{idArtist}(idArtist=${artist.idArtist})}" th:text="${artist.nameArtist}"></a>
+        </li>
+        <li th:each="screenwriter : ${title.screenwriters}">
+          <a th:href="@{/screenwriter/{idScreenwriter}(idScreenwriter=${screenwriter.idScreenwriter})}" th:text="${screenwriter.nameScreenwriter}"></a>
+        </li>
       </ul>
     </div>
 
@@ -65,12 +72,13 @@
     <div class="translators">
       <h2>Перекладачі</h2>
       <ul>
-        <li th:each="translate : ${title.translates}" th:text="${translate.nameTranslate}"></li>
+        <li th:each="translate : ${title.translates}">
+          <a th:href="@{/translator/{idTranslate}(idTranslate=${translate.idTranslate})}" th:text="${translate.nameTranslate}"></a>
+        </li>
       </ul>
     </div>
   </div>
 </main>
 <footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
-
 </body>
 </html>

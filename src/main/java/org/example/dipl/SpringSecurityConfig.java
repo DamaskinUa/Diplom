@@ -1,5 +1,6 @@
 package org.example.dipl;
 
+import org.example.dipl.service.CustomAccessDeniedHandler;
 import org.example.dipl.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -9,23 +10,21 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@Profile("spring-security")
 public class SpringSecurityConfig {
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                   .requestMatchers("/login", "/register", "/catalog/**", "/titles/**", "/css/**", "/images/**","/uploads/**")
+                   .requestMatchers("/login", "/register", "/catalog/**", "/titles/**","/artist/**","/screenwriter/**","/translator/**", "/css/**", "/images/**","/uploads/**","/access-denied")
                    .permitAll() // Allow everyone to access login, register, catalog, and images
                    .requestMatchers("/profile/**","/marker").hasAnyRole("USER", "ADMIN") // Allow access to profile for both users and admins
                    .requestMatchers("/admin/**").hasRole("ADMIN") // Only admins can access /admin/** endpoints
@@ -42,7 +41,10 @@ public class SpringSecurityConfig {
                      .invalidateHttpSession(true) // Invalidate the session on logout
                      .clearAuthentication(true)
                      .deleteCookies("JSESSIONID") // Delete the JSESSIONID cookie
-                .permitAll(); // Allow access to logout for everyone
+                .permitAll()
+                .and()
+                .exceptionHandling()
+                .accessDeniedHandler(customAccessDeniedHandler()); ; // Allow access to logout for everyone
 
         return http.build();
     }
@@ -53,5 +55,9 @@ public class SpringSecurityConfig {
                 http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.userDetailsService(userDetailsService); // Use our custom UserDetailsService
         return authenticationManagerBuilder.build();
+    }
+    @Bean
+    public CustomAccessDeniedHandler customAccessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
     }
 }

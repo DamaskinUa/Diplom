@@ -164,6 +164,10 @@ body {
     border-radius: 4px;
     border: 1px solid #ccc;
 }
+.genre-badge {
+    margin-right: 5px; /* Відступ між жанрами */
+}
+
 
 .search-input {
     margin-bottom: 15px;

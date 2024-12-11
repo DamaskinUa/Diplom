@@ -16,13 +16,13 @@ public class ArtistController {
     @GetMapping
     public String manageArtists(Model model) {
         model.addAttribute("artists", artistRepository.findAll());
-        return "admin/manage_artists"; // HTML сторінка для перегляду/редагування авторів
+        return "admin/artist/manage_artists"; // HTML сторінка для перегляду/редагування авторів
     }
 
     @GetMapping("/add")
     public String addArtistForm(Model model) {
         model.addAttribute("artist", new Artist());
-        return "admin/add_artist"; // Форма для додавання нового автора
+        return "admin/artist/add_artist"; // Форма для додавання нового автора
     }
 
     @PostMapping("/add")
@@ -35,7 +35,7 @@ public class ArtistController {
     public String editArtistForm(@PathVariable Long id, Model model) {
         Artist artist = artistRepository.findById(id).orElseThrow(() -> new RuntimeException("Artist not found"));
         model.addAttribute("artist", artist);
-        return "admin/edit_artist"; // Форма для редагування автора
+        return "admin/artist/edit_artist"; // Форма для редагування автора
     }
 
     @PostMapping("/edit/{id}")

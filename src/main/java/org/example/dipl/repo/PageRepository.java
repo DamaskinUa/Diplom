@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface PageRepository extends JpaRepository<Page, Long> {
     List<Page> findByChapter_IdChapter(Long chapterId);
+    void deleteAllByChapter_IdChapter(Long chapterId);
 }

@@ -1,4 +1,4 @@
-package org.example.dipl;
+package org.example.dipl.service;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

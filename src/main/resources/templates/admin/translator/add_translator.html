@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Додати перекладача</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header" class="header"></header>
+<h1>Додати нового перекладача</h1>
+
+<form th:action="@{/admin/translators/add}" method="post">
+  <label for="nameTranslate">Ім'я перекладача:</label>
+  <input type="text" id="nameTranslate" name="nameTranslate" required>
+
+  <label for="descriptionTranslate">Опис:</label>
+  <textarea id="descriptionTranslate" name="descriptionTranslate"></textarea>
+
+  <button type="submit">Зберегти</button>
+</form>
+
+<a href="/admin/translators">Назад до списку перекладачів</a>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Керування жанрами</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="~{blocks/header :: header}" class="header"></header>
+<h1>Керування жанрами</h1>
+<a href="/admin/genres/add">Додати новий жанр</a>
+<table>
+  <thead>
+  <tr>
+    <th>Назва</th>
+    <th>Дії</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="genre : ${genres}">
+    <td th:text="${genre.nameGenre}"></td>
+    <td>
+      <a th:href="@{/admin/genres/edit/{id}(id=${genre.idGenre})}">Редагувати</a>
+      <form th:action="@{/admin/genres/delete/{id}(id=${genre.idGenre})}" method="post">
+        <button type="submit">Видалити</button>
+      </form>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

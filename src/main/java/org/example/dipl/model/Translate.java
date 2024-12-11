@@ -15,7 +15,7 @@ public class Translate {
     @Column(nullable = false)
     private String nameTranslate;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String descriptionTranslate;
 
     @Column(nullable = false)

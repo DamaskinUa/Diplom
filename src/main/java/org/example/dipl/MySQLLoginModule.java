@@ -1,62 +1,110 @@
 package org.example.dipl;
 
-import org.example.dipl.model.User;
+import jakarta.annotation.PostConstruct;
 import org.example.dipl.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.stereotype.Component;
 
+import javax.security.auth.callback.*;
 import javax.security.auth.login.LoginException;
 import javax.security.auth.spi.LoginModule;
-import javax.security.auth.callback.CallbackHandler;
+import java.io.IOException;
 import java.util.Map;
+import javax.security.auth.Subject;
 
+
+/**
+ * MySQLLoginModule для JAAS.
+ */
+@Component
+@EnableWebSecurity
 public class MySQLLoginModule implements LoginModule {
 
     private String username;
     private String password;
-    private final UserRepository userRepository;
     @Autowired
-    public MySQLLoginModule(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private UserRepository userRepository;
+
+    public MySQLLoginModule() {
+        this.username = null;
+        this.password = null;
+        // Порожній конструктор
     }
 
     @Override
-    public void initialize(javax.security.auth.Subject subject, CallbackHandler callbackHandler, Map<String, ?> sharedState, Map<String, ?> options) {
-        // Ініціалізація
+    public void initialize(Subject subject, CallbackHandler callbackHandler, Map<String, ?> sharedState, Map<String, ?> options) {
+        try {
+            // Перевірка наявності CallbackHandler
+            if (callbackHandler == null) {
+                throw new LoginException("No CallbackHandler available.");
+            }
+            NameCallback nameCallback = new NameCallback("Username: ");
+            PasswordCallback passwordCallback = new PasswordCallback("Password: ", false);
+            // Отримання даних через CallbackHandler
+            try {
+                callbackHandler.handle(new Callback[]{nameCallback, passwordCallback});
+            } catch (UnsupportedCallbackException e) {
+                // Обробка виключення, якщо CallbackHandler не підтримує ці типи callback'ів
+                throw new LoginException("Unsupported callback exception: " + e.getMessage());
+            }
+
+            // Отримання значень username і password
+            username = nameCallback.getName();
+            char[] passwordChars = passwordCallback.getPassword();
+
+            if (passwordChars != null) {
+                password = new String(passwordChars);
+            } else {
+                throw new LoginException("Password cannot be null.");
+            }
+
+        } catch (IOException e) {
+            // Обробка помилок вводу/виводу
+            System.err.println("Error during login process: " + e.getMessage());
+            // Якщо сталася помилка, можна виконати певну додаткову обробку
+        } catch (LoginException e) {
+            // Логування та повторне викидання LoginException, якщо користувач не знайдений чи інша помилка
+            System.err.println("LoginException: " + e.getMessage());
+            // Перенаправлення або інші дії залежно від помилки
+        }
     }
 
     @Override
     public boolean login() throws LoginException {
-        // Отримання імені та пароля
-        // Потрібно зберігати ім'я користувача та пароль у змінних після виклику колбеків
-        if (authenticateWithDatabase(username, password)) {
-            return true;
-        } else {
-            throw new LoginException("Невірне ім'я користувача чи пароль");
-        }
+            if (userRepository.findByLoginUser(username)
+                    .map(user -> user.getPasswordUser().equals(password))
+                    .orElse(false)) {
+                return true;
+            } else {
+                throw new LoginException("Invalid credentials.");
+            }
     }
 
     private boolean authenticateWithDatabase(String username, String password) {
-        // Логіка аутентифікації з MySQL
-        User user = userRepository.findByLoginUser(username).orElse(null);
-        return user != null && user.getPasswordUser().equals(password);
+        if (userRepository == null) {
+            throw new IllegalStateException("UserRepository is not initialized.");
+        }
+
+        return userRepository.findByLoginUser(username)
+                .map(user -> password.equals(user.getPasswordUser()))
+                .orElse(false);
     }
 
     @Override
     public boolean commit() throws LoginException {
-        // Підтвердження аутентифікації
         return true;
     }
 
     @Override
     public boolean abort() throws LoginException {
-        // Повернення в початковий стан
         return false;
     }
 
     @Override
     public boolean logout() throws LoginException {
-        // Вихід з системи
         return true;
     }
 }
+
 

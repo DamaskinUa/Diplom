@@ -6,7 +6,9 @@ import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,8 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 import javax.sql.DataSource;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -54,6 +58,7 @@ public class ShiroConfig {
         System.out.println("sssssssssssssssssssssssssssssssssss");
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(jdbcRealm);
+        securityManager.setRememberMeManager(rememberMeManager());
         return securityManager;
     }
 
@@ -89,12 +94,40 @@ public class ShiroConfig {
     @Bean
     public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
         System.out.println("lllllllllllllllllllllllllllllllllllllll");
+        try {
+            SecurityUtils.setSecurityManager(securityManager(jdbcRealm(dataSource())));
+            System.out.println("SecurityManager встановлено успішно.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return new LifecycleBeanPostProcessor();
     }
     @PostConstruct
-    public void initializeShiro() {
-        // Bind SecurityManager explicitly after context has been fully initialized
-        SecurityUtils.setSecurityManager(securityManager(null));
-        System.out.println("SecurityManager has been bound successfully.");
+    public void init() {
+        try {
+            SecurityUtils.setSecurityManager(securityManager(jdbcRealm(dataSource())));
+            System.out.println("SecurityManager встановлено успішно.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+    @Bean
+    public CookieRememberMeManager rememberMeManager() {
+        CookieRememberMeManager rememberMeManager = new CookieRememberMeManager();
+
+        // Встановіть шифрування з коректним ключем
+        String cipherKey = "1234567890123456"; // 16 символів
+        rememberMeManager.setCipherKey(cipherKey.getBytes(StandardCharsets.UTF_8));
+
+        SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
+        simpleCookie.setHttpOnly(true);
+        simpleCookie.setPath("/");
+        rememberMeManager.setCookie(simpleCookie);
+
+        return rememberMeManager;
+    }
+
+
+
+
 }

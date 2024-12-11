@@ -1,0 +1,2 @@
+В класі DataInitializationService є елементи для тестування при першому запуску
+В application.properties відбувається налаштування доступу до бази даних

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Додати статус</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="~{blocks/header :: header}" class="header"></header>
+<h1>Додати статус</h1>
+<form th:action="@{/admin/statuses/add}" method="post">
+  <label for="nameStatus">Назва статусу</label>
+  <input type="text" id="nameStatus" name="nameStatus" required/>
+  <button type="submit">Зберегти</button>
+</form>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

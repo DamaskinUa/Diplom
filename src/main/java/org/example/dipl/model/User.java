@@ -84,7 +84,6 @@ public class User {
         this.role = role;
     }
 
-
     public Set<TitleData> getMarkedTitles() {
         return markedTitles;
     }

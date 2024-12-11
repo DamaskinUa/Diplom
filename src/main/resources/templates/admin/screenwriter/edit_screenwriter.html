@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Редагувати автора</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header" class="header"></header>
+<h1>Редагувати сценариста</h1>
+
+<form th:action="@{/admin/screenwriters/edit/{id}(id=${screenwriter.idScreenwriter})}" method="post">
+  <label for="nameScreenwriter">Ім'я сценариста:</label>
+  <input type="text" id="nameScreenwriter" name="nameScreenwriter" th:value="${screenwriter.nameScreenwriter}" required>
+
+  <label for="descriptionScreenwriter">Опис:</label>
+  <textarea id="descriptionScreenwriter" name="descriptionScreenwriter" th:text="${screenwriter.descriptionScreenwriter}"></textarea>
+
+  <button type="submit">Зберегти зміни</button>
+</form>
+
+<a href="/admin/screenwriters">Назад до списку авторів</a>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

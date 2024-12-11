@@ -24,7 +24,7 @@ public class TitleData {
     private StatusData status;
 
 
-    @OneToMany(mappedBy = "title")
+    @OneToMany(mappedBy = "title", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Chapter> chapters;
 
     @ManyToMany(mappedBy = "markedTitles")

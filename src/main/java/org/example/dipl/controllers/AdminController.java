@@ -75,7 +75,7 @@ public class AdminController {
     public String addTitle(@ModelAttribute TitleData titleData,
                            @RequestParam("image") MultipartFile image,
                            @RequestParam("artists") Set<Long> artistIds,
-                           @RequestParam("screenwriters") Set<Long> screenwriterIds,
+                           @RequestParam(name = "screenwriters",required = false) Set<Long> screenwriterIds,
                            @RequestParam("translates") Set<Long> translateIds) {
         // Перевірка і створення каталогу для зображень, якщо він не існує
         String uploadDir = "uploads/images"; // Папка для зображень в корені проєкту
@@ -120,7 +120,10 @@ public class AdminController {
 
         // Застосовуємо ці колекції до об'єкта titleData
         titleData.setArtists(artists);
-        titleData.setScreenwriters(screenwriters);
+        if (screenwriters!=null && screenwriters.size()>0) {
+            titleData.setScreenwriters(screenwriters);
+
+        }
         titleData.setTranslates(translates);
 
         // Збереження поточної дати
@@ -149,7 +152,7 @@ public class AdminController {
                             @ModelAttribute TitleData titleData,
                             @RequestParam("image") MultipartFile image,
                             @RequestParam("artists") Set<Long> artistIds,
-                            @RequestParam("screenwriters") Set<Long> screenwriterIds,
+                            @RequestParam(value = "screenwriters",required = false) Set<Long> screenwriterIds,
                             @RequestParam("translates") Set<Long> translateIds) {
         // Знайдемо існуючий запис
         TitleData existingTitle = titleDataRepository.findById(id).orElseThrow(() -> new RuntimeException("Title not found"));

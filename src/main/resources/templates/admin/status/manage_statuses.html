@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Керування статусами</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="~{blocks/header :: header}" class="header"></header>
+<h1>Керування статусами</h1>
+<a href="/admin/statuses/add">Додати новий статус</a>
+<table>
+    <thead>
+    <tr>
+        <th>Назва</th>
+        <th>Дії</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="status : ${statuses}">
+        <td th:text="${status.nameStatus}"></td>
+        <td>
+            <a th:href="@{/admin/statuses/edit/{id}(id=${status.idStatus})}">Редагувати</a>
+            <form th:action="@{/admin/statuses/delete/{id}(id=${status.idStatus})}" method="post">
+                <button type="submit">Видалити</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

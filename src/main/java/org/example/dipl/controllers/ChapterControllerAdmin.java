@@ -3,9 +3,11 @@ package org.example.dipl.controllers;
 import org.example.dipl.model.Chapter;
 import org.example.dipl.model.TitleData;
 import org.example.dipl.repo.ChapterRepository;
+import org.example.dipl.repo.PageRepository;
 import org.example.dipl.repo.TitleDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin/titles/{titleId}/chapters")
 public class ChapterControllerAdmin {
+    @Autowired
+    private PageRepository pageRepository;
 
     @Autowired
     private ChapterRepository chapterRepository;
@@ -71,7 +75,9 @@ public class ChapterControllerAdmin {
     }
 
     @PostMapping("/delete/{chapterId}")
+    @Transactional
     public String deleteChapter(@PathVariable Long titleId, @PathVariable Long chapterId) {
+        pageRepository.deleteAllByChapter_IdChapter(chapterId);
         chapterRepository.deleteById(chapterId);
         return "redirect:/admin/titles/" + titleId + "/chapters";
     }

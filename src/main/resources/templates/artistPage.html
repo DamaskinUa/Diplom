@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Профіль</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header" class="header"></header>
+<h1>Інформація про автора</h1>
+<div>
+  <h2 th:text="${artist.nameArtist}">Ім'я автора</h2>
+  <p th:text="${artist.descriptioneArtist}">Опис автора</p>
+</div>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

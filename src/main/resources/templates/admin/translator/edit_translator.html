@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Редагувати перекладача</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="blocks/header :: header" class="header"></header>
+<h1>Редагувати перекладача</h1>
+
+<form th:action="@{/admin/translators/edit/{id}(id=${translator.idTranslate})}" method="post">
+  <label for="nameTranslate">Ім'я перекладача:</label>
+  <input type="text" id="nameTranslate" name="nameTranslate" th:value="${translator.nameTranslate}" required>
+
+  <label for="descriptionTranslate">Опис:</label>
+  <textarea id="descriptionTranslate" name="descriptionTranslate" th:text="${translator.descriptionTranslate}"></textarea>
+
+  <button type="submit">Зберегти зміни</button>
+</form>
+
+<a href="/admin/artists">Назад до списку перекладачів</a>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

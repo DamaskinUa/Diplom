@@ -17,6 +17,10 @@
             <span th:if="${#authentication != null and #authentication.name != 'anonymousUser'}">
                 <a href="/marker" class="nav-link">Закладки</a>
                 <a href="/profile" class="nav-link">Мій профіль</a>
+
+            </span>
+            <span th:if="${#authentication != null and #authentication.authorities.toString().contains('ROLE_ADMIN')}">
+                <a href="/admin" class="nav-link">Адмін панель</a>
             </span>
         </div>
     </nav>

@@ -2,6 +2,7 @@ package org.example.dipl.controllers;
 
 
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.example.dipl.form.RegistrationForm;
 import org.example.dipl.model.RoleUser;
@@ -65,9 +66,9 @@ import java.util.Arrays;
 
                 // Спроба входу користувача
                 try {
-                    currentUser.login(new org.apache.shiro.authc.UsernamePasswordToken(username, password));
+                    currentUser.login(new UsernamePasswordToken(username, password, true));
                     if (currentUser.isAuthenticated()) {
-                        return "redirect:/profile"; // Перехід на сторінку профілю
+                        return "redirect:/catalog"; // Перехід на сторінку профілю
                     }
                 } catch (org.apache.shiro.authc.AuthenticationException e) {
                     return "redirect:/login?error=true"; // Помилка автентифікації
@@ -77,7 +78,7 @@ import java.util.Arrays;
                 // Якщо використовується інший профіль
                 boolean isAuthenticated = securityService.authenticate(username, password);
                 if (isAuthenticated) {
-                    return "redirect:/profile";
+                    return "redirect:/catalog";
                 } else {
                     return "redirect:/login?error=true";
                 }
@@ -91,10 +92,11 @@ import java.util.Arrays;
             if (isApacheShiroProfile) {
                 // Отримуємо об'єкт Subject з Shiro
                 Subject currentUser = SecurityUtils.getSubject();
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-                if (currentUser.isAuthenticated()) {
+                if (currentUser.isAuthenticated() || authentication != null) {
                     // Отримуємо ім'я користувача
-                    String username = (String) currentUser.getPrincipal();
+                    String username = authentication.getName();
 
                     // Завантажуємо користувача з бази даних
                     User user = userRepository.findByLoginUser(username).orElse(null);

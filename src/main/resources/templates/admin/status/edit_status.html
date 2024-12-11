@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Редагування статусу</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header th:insert="~{blocks/header :: header}" class="header"></header>
+<h1>Редагування статусу</h1>
+<form th:action="@{/admin/statuses/edit/{id}(id=${status.idStatus})}" method="post">
+  <label for="nameStatus">Назва</label>
+  <input type="text" id="nameStatus" name="nameStatus" th:value="${status.nameStatus}" required/>
+  <button type="submit">Зберегти</button>
+</form>
+<footer th:insert="~{blocks/footer::footer}" class="footer"></footer>
+</body>
+</html>

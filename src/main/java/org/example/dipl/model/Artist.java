@@ -12,7 +12,7 @@ public class Artist {
     private Long idArtist;
     @Column
     private String nameArtist;
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String descriptioneArtist;
 
     @ManyToMany(mappedBy = "artists")
